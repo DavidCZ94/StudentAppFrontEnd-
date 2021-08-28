@@ -1,13 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { Student } from '../models/student.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
 
-  constructor() { }
+  studentApiUrl = `${environment.studentAppApiUrl}/student`;
+
+  constructor(
+    private httpClient: HttpClient,
+  ) { }
 
   fetchStudents(){
-    console.log('Sturdents service');
+    return this.httpClient.get<Student[]>(this.studentApiUrl);
   }
 }
