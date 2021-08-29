@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentsService } from 'src/app/core/services/students.service';
 import { Student } from '../../../core/models/student.model';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-students',
@@ -9,7 +10,9 @@ import { Student } from '../../../core/models/student.model';
 })
 export class StudentsComponent implements OnInit {
 
-  students :any[] = [];
+  faPlus = faPlus;
+
+  students :Student[] = [];
 
   constructor(
     private studentsService: StudentsService,

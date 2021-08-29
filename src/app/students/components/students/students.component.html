@@ -1,26 +1,29 @@
+<div class="container text-center my-4">
+  <app-create-update-student [student]="null"></app-create-update-student>
+</div>
 <div class="table-responsive mt-3">
-<table class="table table-dark table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Id</th>
-          <th scope="col">Studiante</th>
-          <th scope="col">Email</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Direccion</th>
-          <th scope="col">Identificacion</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let student of students; index as i;">
-          <th scope="row">{{i}}</th>
-          <td> {{ student.id }} </td>
-          <td> {{ student.name1 }} {{ student.name2 }}  {{ student.lastName1 }} {{ student.lastName2 }} </td>
-          <td> {{ student.email }} </td>
-          <td> {{ student.phone }} </td>
-          <td> {{ student.direction }} {{ student.city }}</td>
-          <td> {{ student.identificationType }}: {{ student.identification }} </td>
-        </tr>
-      </tbody>
-    </table>
+  <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Identificacion</th>
+            <th scope="col">Primer nombre</th>
+            <th scope="col">Primer Apellido</th>
+            <th scope="col">Email</th>
+            <th scope="col">Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students; index as i;">
+            <th scope="row">{{i}}</th>
+            <td>{{student.identificationType }}: {{ student.identification }} </td>
+            <td>{{student.name1}}</td>
+            <td>{{student.lastName1}}</td>
+            <td>{{student.email}}</td>
+            <td>
+              <app-create-update-student [student]="student"></app-create-update-student>
+            </td>
+          </tr>
+        </tbody>
+  </table>
 </div>
