@@ -11,4 +11,12 @@ export interface Student{
     direction?: string,
     city: string,
     studentCourses?: [],
+    studentCoursesToSend?: StudentCourse [],
+};
+
+export interface StudentCourse{
+    id?: number,
+    idStudent: number,
+    idCurso?: number,
+    finalGrade: number
 };

@@ -126,8 +126,9 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
   private createStudentCoursesField(course: any){
     return this.formBuilder.group({
       status: [course.status],
-      course: [course.name],
-      finalGrade: [course.finalGrade]
+      name: [course.name],
+      finalGrade: [course.finalGrade],
+      id: [course.id]
     });
   }
 
@@ -138,17 +139,17 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
   saveData(){
     if( this.form.valid ){
       if( this.student.id != 0  ){
-        this.studentService.updateStudent(this.form.value)/* .subscribe(
+        this.studentService.updateStudent(this.form.value).subscribe(
           (res) => {
             console.log(res);
           }
-        ); */
+        );
       }else{
-        this.studentsService.createStudent(this.form.value)/* .subscribe(
+        this.studentsService.createStudent(this.form.value).subscribe(
           (res) => {
             console.log(res);
           }
-        ); */
+        );
       }
     }else{
       this.form.markAllAsTouched();

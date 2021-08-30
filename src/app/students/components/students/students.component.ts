@@ -34,7 +34,6 @@ export class StudentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.students.length);
     this.studentsService.fetchStudents().subscribe(
       (res) => {
         this.errorFetchingStudents = false;

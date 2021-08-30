@@ -1,6 +1,6 @@
 export interface StudentCourse{
-    id: number,
+    id?: number,
     idStudent: number,
-    idCurso: number,
+    idCurso?: number,
     finalGrade: number
 };
