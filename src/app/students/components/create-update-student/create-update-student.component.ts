@@ -17,7 +17,7 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
   updateMode = false;
   defaultStudent: Student = {
     id: 0,
-    identificationType: 'CC',
+    identificationType: '',
     identification: '',
     name1: '',
     name2: '',
@@ -30,7 +30,7 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
   };
   @Input() student: Student = {
     id: 0,
-    identificationType: 'CC',
+    identificationType: '',
     identification: '',
     name1: '',
     name2: '',
@@ -49,14 +49,14 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
     private renderer2: Renderer2,
     private studentService: StudentsService,
     private formBuilder: FormBuilder,
-    private studentsServices: StudentsService
+    private studentsService: StudentsService
   ) {}
 
   ngOnInit(): void {
-    if( this.student.id == 0 ){
-      this.updateMode = false;
-    }else{
+    if( this.student.id ){
       this.updateMode = true;
+    }else{
+      this.updateMode = false;
     }
     this.buildForm();
   }
@@ -79,7 +79,8 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
 
   buildForm(){
     this.form = this.formBuilder.group({
-      identificacionType: [this.student.identificationType , [Validators.required, Validators.maxLength(2), Validators.minLength(2)] ],
+      id: [this.student.id,],
+      identificationType: [this.student.identificationType , [Validators.required, Validators.maxLength(2), Validators.minLength(2)] ],
       identification: [this.student.identification , [Validators.required, Validators.maxLength(15)]],
       name1: [this.student.name1 , [Validators.required, Validators.maxLength(20)]],
       name2: [this.student.name2 , [Validators.maxLength(20)]],
@@ -93,9 +94,20 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
   }
 
   saveData(){
-    console.log(this.form.valid);
     if( this.form.valid ){
-      console.log(this.form.value);    
+      if( this.student.id != 0  ){
+        this.studentService.updateStudent(this.form.value).subscribe(
+          (res) => {
+            console.log(res);
+          }
+        );;
+      }else{
+        this.studentsService.createStudent(this.form.value).subscribe(
+          (res) => {
+            console.log(res);
+          }
+        );
+      }
     }else{
       this.form.markAllAsTouched();
     }

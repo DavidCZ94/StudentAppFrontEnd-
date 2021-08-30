@@ -10,8 +10,7 @@
       <div class="modal-content">
         <div #modalHeader class="modal-header">
           <h5 #modalTitle class="modal-title" id="exampleModalLabel">
-            Formulario de Estudiante
-            {{student.name1}}
+            Formulario de Estudiante {{student.name1}} {{student.lastName1}}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -28,13 +27,18 @@
                     <div class="accordion-body">
                       <!-- Identification Tipe -->
                       <div class="form-floating mb-3">
-                        <select formControlName="identificacionType" class="form-select" id="identificacionType" aria-label="Floating label select example">
-                          <option selected value="CC">Cedula Ciudadania</option>
+                        <select 
+                          formControlName="identificationType" 
+                          class="form-select" 
+                          id="identificationType" 
+                          aria-label="Floating label select example"
+                          >
+                          <option value="CC">Cedula Ciudadania</option>
                           <option value="CE">Cedula de Extranjeria</option>
                           <option value="TI">Tarjeta de Identidad</option>
                           <option value="TE">Tarjeta de Extranjeria</option>
                         </select>
-                        <label for="identificacionType">Selecciona el tipo de documento de identificación</label>
+                        <label for="identificationType">Selecciona el tipo de documento de identificación</label>
                       </div>
                       <!-- /Identification Tipe -->
                       <!-- Identification -->

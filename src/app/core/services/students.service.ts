@@ -34,6 +34,15 @@ export class StudentsService {
     return this.httpClient.get<Student[]>(this.studentApiUrl);
   }
 
+  createStudent(student: Student){
+    return this.httpClient.post<Student>(this.studentApiUrl, student);
+  }
+
+  updateStudent(student: Student){
+    return this.httpClient.put<Student>(`${this.studentApiUrl}/${student.id}`, student);
+  }
+  
+
   getCurrentStudent(){
     return this.currentStudent;
   }
@@ -41,5 +50,13 @@ export class StudentsService {
   setCurrentStudent(student: Student){
     this.currentStudent = student;
   }
-  
+
+  setUpdateMode(updateMode: boolean){
+    this.updateMode = updateMode;
+  }
+
+  getUpdateMode(){
+    return this.updateMode;
+  }
+
 }
