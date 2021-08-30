@@ -1,9 +1,12 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, Input, AfterViewInit } from '@angular/core';
 import { StudentsService } from '../../../core/services/students.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Student } from '../../../core/models/student.model';
 import { INFERRED_TYPE } from '@angular/compiler/src/output/output_ast';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { Course } from 'src/app/core/models/course.model';
+import { createOfflineCompileUrlResolver } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-update-student',
@@ -13,6 +16,7 @@ import { INFERRED_TYPE } from '@angular/compiler/src/output/output_ast';
 export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
 
   form: any;
+  fetchedCourses = false;
   faPlus = faPlus;
   updateMode = false;
   defaultStudent: Student = {
@@ -42,6 +46,8 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
     city: '',
   };
 
+  courses: Course[] = [];
+
   @ViewChild('updateCreateStudentModal') updateCreateStudentModal!: ElementRef;
 
 
@@ -49,16 +55,28 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
     private renderer2: Renderer2,
     private studentService: StudentsService,
     private formBuilder: FormBuilder,
-    private studentsService: StudentsService
+    private studentsService: StudentsService,
+    private coursesService: CoursesService,
   ) {}
 
   ngOnInit(): void {
+    this.fetchCourses();
     if( this.student.id ){
       this.updateMode = true;
     }else{
       this.updateMode = false;
     }
     this.buildForm();
+  }
+
+  fetchCourses(){
+    this.coursesService.fetchCourses().subscribe(
+      (res) => {
+        this.courses = res;
+        this.fetchedCourses = true;
+        //console.log(this.studentCoursesField);
+      }
+    )
   }
 
   showModal(){
@@ -70,6 +88,13 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
       this.student = this.studentService.getCurrentStudent();
       this.form.value = this.student;
       this.buildForm();
+      if(this.fetchedCourses){
+        this.courses.map(
+          (course) => {
+            this.addStudentCoursesField(course);
+          }
+        )
+      }
     });
     this.renderer2.listen(this.updateCreateStudentModal.nativeElement, 'hidden.bs.modal', (event) => {
       this.student = this.defaultStudent;
@@ -90,23 +115,40 @@ export class CreateUpdateStudentComponent implements OnInit, AfterViewInit {
       phone: [this.student.phone , [Validators.maxLength(20)]],
       direction: [this.student.direction ,[Validators.maxLength(50)]],
       city: [this.student.city ,[Validators.required,Validators.maxLength(50)]],
+      studentCourses: this.formBuilder.array([])
     });
+  }
+
+  addStudentCoursesField(course: any){
+    this.studentCoursesField.push(this.createStudentCoursesField(course));
+  }
+  
+  private createStudentCoursesField(course: any){
+    return this.formBuilder.group({
+      status: [course.status],
+      course: [course.name],
+      finalGrade: [course.finalGrade]
+    });
+  }
+
+  get studentCoursesField(){
+    return this.form.get('studentCourses') as FormArray;
   }
 
   saveData(){
     if( this.form.valid ){
       if( this.student.id != 0  ){
-        this.studentService.updateStudent(this.form.value).subscribe(
+        this.studentService.updateStudent(this.form.value)/* .subscribe(
           (res) => {
             console.log(res);
           }
-        );;
+        ); */
       }else{
-        this.studentsService.createStudent(this.form.value).subscribe(
+        this.studentsService.createStudent(this.form.value)/* .subscribe(
           (res) => {
             console.log(res);
           }
-        );
+        ); */
       }
     }else{
       this.form.markAllAsTouched();

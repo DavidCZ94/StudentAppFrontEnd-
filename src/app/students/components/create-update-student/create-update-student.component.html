@@ -5,7 +5,7 @@
   
 <!-- Modal -->
 <div #updateCreateStudentModal class="modal fade" id="updateCreateStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <form  [formGroup]="form" (ngSubmit)="saveData()">
       <div class="modal-content">
         <div #modalHeader class="modal-header">
@@ -197,7 +197,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="accordion-item">
+                <div class="accordion-item text-center">
                   <h2 class="accordion-header" id="headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                       Selecciona los cursos que quieres asignar al usuario.
@@ -205,14 +205,26 @@
                   </h2>
                   <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
+
+                      <div  *ngIf="fetchedCourses" >
+                        <div formArrayName="studentCourses" *ngFor="let studentCourse of studentCoursesField.controls; let i = index">
+                            <div class="input-group mb-3 w-100" [formGroupName]="i">
+                              <div>
+                                <input formControlName="course" class="form-control" type="text" [value]="courses[i].name" aria-label="readonly input example" readonly>
+                              </div>
+                              <div>
+                                <input formControlName="finalGrade" id="finalGrade" type="number" min="-9.99" max="9.99" requiered class="form-control" placeholder="Nota Final" aria-label="Server" [class.is-invalid]="studentCourse.invalid">
+                              </div>
+                              <div class="form-switch mx-1 my-2">
+                                <input formControlName="status" id="status" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                              </div>
+    
+                            </div>
+                        </div>
+                      </div>
+
                       
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
-                      
+                      <!-- Courses -->
                     </div>
                   </div>
                 </div>

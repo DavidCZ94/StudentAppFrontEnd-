@@ -13,6 +13,7 @@ export class StudentsComponent implements OnInit {
   faPlus = faPlus;
 
   students :Student[] = [];
+  errorFetchingStudents = false;
   
   defaultStudent: Student = {
     id: 0,
@@ -33,11 +34,14 @@ export class StudentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.students.length);
     this.studentsService.fetchStudents().subscribe(
       (res) => {
+        this.errorFetchingStudents = false;
         this.students = res;
       },
       (err) => {
+        this.errorFetchingStudents = true;
         console.log(err);
       });
   }

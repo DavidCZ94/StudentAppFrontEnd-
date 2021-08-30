@@ -35,11 +35,13 @@ export class StudentsService {
   }
 
   createStudent(student: Student){
-    return this.httpClient.post<Student>(this.studentApiUrl, student);
+    console.log(student);
+    //return this.httpClient.post<Student>(this.studentApiUrl, student);
   }
 
   updateStudent(student: Student){
-    return this.httpClient.put<Student>(`${this.studentApiUrl}/${student.id}`, student);
+    console.log(student);
+    //return this.httpClient.put<Student>(`${this.studentApiUrl}/${student.id}`, student);
   }
   
 

@@ -1,7 +1,7 @@
-<div class="container text-center my-4">
+<div *ngIf="students.length"  class="container text-center my-4">
   <app-create-update-student [student]="defaultStudent"></app-create-update-student>
 </div>
-<div class="table-responsive mt-3">
+<div *ngIf="students.length" class="table-responsive mt-3">
   <table class="table table-striped">
         <thead>
           <tr>
@@ -26,4 +26,16 @@
           </tr>
         </tbody>
   </table>
+</div>
+
+<div *ngIf="!students.length && !errorFetchingStudents" class="d-flex justify-content-center my-3">
+  <div class="spinner-border spinner-border-xl" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="errorFetchingStudents" class="card border-danger my-3">
+  <div class="card-body text-danger">
+    <h5 class="card-title">Ha Acurrido un error al intentar conectar con la base de datos. Por favor revisa tu coneccion a internet.</h5>
+  </div>
 </div>
