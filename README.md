@@ -1,3 +1,17 @@
+# Students Courses APP
+
+This is a project in which an application was developed whose objective of this project is to manage the information of a database that contains information about students and some courses that correspond to the students. This application was developed with Angular, .net and a SQL database.
+
+
+
+In the following link you will see the project's repositories.
+[Front-End](https://github.com/DavidCZ94/StudentAppFrontEnd-)
+[back end](https://github.com/DavidCZ94/StudentsAppAPI)
+
+In the database repository you will find some scripts that you can run in your SQL database administrator.
+
+Do not forget to configure the environment variables of the projects to connect them correctly.
+
 # StudentAppFrontEnd
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
