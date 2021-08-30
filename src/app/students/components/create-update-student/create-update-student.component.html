@@ -1,93 +1,228 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" (click)="setStudentId()" data-bs-target="#updateCreateStudentModal">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" (click)="showModal()" data-bs-target="#updateCreateStudentModal" data-bs-whatever="@Student">
     {{ updateMode ? 'Editar' : 'Agregar Nuevo '}} 
 </button>
   
 <!-- Modal -->
 <div #updateCreateStudentModal class="modal fade" id="updateCreateStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
+      <form  [formGroup]="form" (ngSubmit)="saveData()">
       <div class="modal-content">
         <div #modalHeader class="modal-header">
           <h5 #modalTitle class="modal-title" id="exampleModalLabel">
-            {{ updateMode ? 'Actualizar estudiante' : 'Editar studiante'}}
+            Formulario de Estudiante
+            {{student.name1}}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- New Studen Form -->
-        <form  [formGroup]="form" (ngSubmit)="saveData()">
           <div class="modal-body">
-            <div class="accordion" id="accordionExample">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Completa La informacion del usuario.
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    <div class="form-floating mb-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="name"
-                        placeholder="Name"
-                        formControlName="name"
-                      />
-                      <label for="floatingInput">Name</label>
-                    </div>
-                    <div class="form-floating  mb-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="lastName"
-                        placeholder="LastName"
-                        formControlName="LastName"
-                      />
-                      <label for="floatingPassword">Last name</label>
-                    </div>
-                    <div class="form-floating  mb-3">
-                      <input
-                        type="tel"
-                        class="form-control"
-                        id="phoneNumber"
-                        placeholder="Phone Number"
-                        formControlName="phoneNumber"
-                      />
-                      <label for="floatingPassword">Phone Number</label>
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Completa La informacion del usuario.
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <!-- Identification Tipe -->
+                      <div class="form-floating mb-3">
+                        <select formControlName="identificacionType" class="form-select" id="identificacionType" aria-label="Floating label select example">
+                          <option selected value="CC">Cedula Ciudadania</option>
+                          <option value="CE">Cedula de Extranjeria</option>
+                          <option value="TI">Tarjeta de Identidad</option>
+                          <option value="TE">Tarjeta de Extranjeria</option>
+                        </select>
+                        <label for="identificacionType">Selecciona el tipo de documento de identificación</label>
+                      </div>
+                      <!-- /Identification Tipe -->
+                      <!-- Identification -->
+                      <div class="form-floating mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.identification.invalid"
+                          type="text"
+                          class="form-control"
+                          id="identificationTipe"
+                          placeholder="Identificacion"
+                          formControlName="identification"
+                          [value]="student.identification"
+                        />
+                        <label for="identification">Numero de Identificacion</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 15 caracteres
+                        </div>
+                      </div>
+                      <!-- /Identification -->
+                      <!-- Name 1 -->
+                      <div class="form-floating mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.name1.invalid"
+                          type="text"
+                          class="form-control"
+                          id="name1"
+                          placeholder="Primer Nombre"
+                          formControlName="name1"
+                          [value]="student.name1"
+                        />
+                        <label for="name1">Primer Nombre</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 20 caracteres
+                        </div>
+                      </div>
+                      <!-- /Name 1 -->
+                      <!-- Name 2 -->
+                      <div class="form-floating  mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.name2.invalid && form.controls.name2.touched"
+                          type="text"
+                          class="form-control"
+                          id="name2"
+                          placeholder="Segundo Nombre"
+                          formControlName="name2"
+                          [value]="student.name2"
+                        />
+                        <label for="name2">Segundo Nombre</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 20 caracteres
+                        </div>
+                      </div>
+                      <!-- /Name 2 -->
+                      <!-- LastNAme1 -->
+                      <div class="form-floating  mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.lastName1.invalid"
+                          type="text"
+                          class="form-control"
+                          id="lastName1"
+                          placeholder="Primer Apellido"
+                          formControlName="lastName1"
+                          [value]="student.lastName1"
+                        />
+                        <label for="lastName1">Primer Apellido</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 20 caracteres
+                        </div>
+                      </div>
+                      <!-- /LastNAme1 -->
+                      <!-- LastNAme2 -->
+                      <div class="form-floating  mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.lastName2.invalid"
+                          type="text"
+                          class="form-control"
+                          id="lastName2"
+                          placeholder="Segundo Apellido"
+                          formControlName="lastName2"
+                          [value]="student.lastName2"
+                        />
+                        <label for="lastName2">Segundo Apellido</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 20 caracteres
+                        </div>
+                      </div>
+                      <!-- /LastNAme2 -->
+                      <!-- Email -->
+                      <div class="form-floating  mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.email.invalid"
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          placeholder="Email"
+                          formControlName="email"
+                          [value]="student.email"
+                        />
+                        <label for="email">Email</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 50 caracteres
+                        </div>
+                      </div>
+                      <!-- /Email -->
+                      <!-- Phone -->
+                      <div class="form-floating  mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.phone.invalid"
+                          type="tel"
+                          class="form-control"
+                          id="phone"
+                          placeholder="Teléfono Celular"
+                          formControlName="phone"
+                          [value]="student.phone"
+                        />
+                        <label for="phone">Teléfono Celular</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 20 caracteres
+                        </div>
+                      </div>
+                      <!-- /Phone -->
+                      <!-- Direction -->
+                      <div class="form-floating  mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.direction.invalid"
+                          type="text"
+                          class="form-control"
+                          id="direction"
+                          placeholder="Direccion"
+                          formControlName="direction"
+                          [value]="student.direction"
+                        />
+                        <label for="direction">Direccion</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 50 caracteres
+                        </div>
+                      </div>
+                      <!-- /Direction -->
+                      <!-- City -->
+                      <div class="form-floating  mb-3">
+                        <input
+                          [class.is-invalid]="form.controls.city.invalid"
+                          type="text"
+                          class="form-control"
+                          id="city"
+                          placeholder="Ciudad"
+                          formControlName="city"
+                          [value]="student.city"
+                        />
+                        <label for="city">Ciudad</label>
+                        <div id="validationServer03Feedback" class="invalid-feedback">
+                          Este campo debe tener entre 1 y 50 caracteres
+                        </div>
+                      </div>
+                      <!-- /City -->
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Selecciona los cursos que quieres asignar al usuario.
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    
-                    <div class="form-floating  mb-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="post"
-                        placeholder="Post"
-                        formControlName="post"
-                      />
-                      <label for="floatingPassword">Post</label>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Selecciona los cursos que quieres asignar al usuario.
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum nobis incidunt commodi dolorem, ea itaque dolore nisi ratione minima, illum harum nam? Perspiciatis molestias magni modi, dolores impedit doloribus!
+                      
                     </div>
-                    
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary">Submit</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar Formulario</button>
+              <!-- [disabled]='form.invalid' -->
+              <button
+                type="submit" 
+                class="btn btn-primary"
+              >Guardar Informacion</button>
+            </div>
           </div>
         </form>
-      </div>
     </div>
 </div>

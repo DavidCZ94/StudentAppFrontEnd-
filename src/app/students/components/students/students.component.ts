@@ -13,6 +13,20 @@ export class StudentsComponent implements OnInit {
   faPlus = faPlus;
 
   students :Student[] = [];
+  
+  defaultStudent: Student = {
+    id: 0,
+    identificationType: 'CC',
+    identification: '',
+    name1: '',
+    name2: '',
+    lastName1: '',
+    lastName2: '',
+    email: '',
+    phone: '',
+    direction: '',
+    city: '',
+  };
 
   constructor(
     private studentsService: StudentsService,
